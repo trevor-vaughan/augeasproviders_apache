@@ -36,7 +36,7 @@ Puppet::Type.type(:apache_setenv).provide(:augeas, :parent => Puppet::Type.type(
   define_aug_method!(:create) do |aug, resource|
     last_path = '$target/directive[.="SetEnv"][last()]'
     if aug.match('$target/directive[.="SetEnv"]').empty?
-      aug.clear('$target/directive[last()+1]') 
+      aug.clear('$target/directive[last()+1]')
     else
       # Prefer to insert the new node after the last SetEnv
       aug.insert(last_path, 'directive', false)

@@ -7,7 +7,7 @@ Puppet::Type.type(:apache_directive).provide(:augeas, :parent => Puppet::Type.ty
   desc 'Use the Augeas API to update a directive in Apache'
 
   lens { 'Httpd.lns' }
-  
+
   default_file do
     case Facter.value(:osfamily)
     when 'RedHat'
@@ -62,7 +62,7 @@ Puppet::Type.type(:apache_directive).provide(:augeas, :parent => Puppet::Type.ty
       top_path += "/#{resource[:context]}" unless resource[:context].empty?
       last_path = "#{top_path}/directive[.='#{resource[:name]}'][last()]"
       if aug.match(last_path).empty?
-        aug.clear("#{top_path}/directive[last()+1]") 
+        aug.clear("#{top_path}/directive[last()+1]")
       else
         # Prefer to insert the new node after the last directive with the same name
         aug.insert(last_path, 'directive', false)
